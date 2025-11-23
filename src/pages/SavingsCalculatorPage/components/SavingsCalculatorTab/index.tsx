@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Tab } from 'tosslib';
-import { ProductsTab } from '@/pages/SavingsCalculatorPage/components/SavingsCalculatorTab/ProductsTab';
+import { Products } from '@/pages/SavingsCalculatorPage/components/SavingsCalculatorTab/Products';
+import { Results } from '@/pages/SavingsCalculatorPage/components/SavingsCalculatorTab/Results';
 
 export function SavingsCalculatorTab() {
   const [selected, setSelected] = useState('products');
@@ -16,7 +17,8 @@ export function SavingsCalculatorTab() {
         </Tab.Item>
       </Tab>
 
-      {selected === 'products' && <ProductsTab />}
+      {selected === 'products' && <Products />}
+      {selected === 'results' && <Results />}
     </>
   );
 }

@@ -7,5 +7,5 @@ export const formatNumber = (value?: number) => {
   if (value === undefined || value === null || isNaN(value)) {
     return '';
   }
-  return value.toLocaleString('ko-KR');
+  return Math.round(value).toLocaleString('ko-KR');
 };

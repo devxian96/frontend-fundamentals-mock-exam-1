@@ -4,7 +4,7 @@ import type { FormInputs } from '@/pages/SavingsCalculatorPage';
 import { useFormContext } from 'react-hook-form';
 import { useGetSavingsProducts } from '@/pages/SavingsCalculatorPage/hooks/apis/savings-products';
 
-export function ProductsTab() {
+export function Products() {
   const { data: savingsProducts } = useGetSavingsProducts();
 
   const { setValue, watch } = useFormContext<FormInputs>();
