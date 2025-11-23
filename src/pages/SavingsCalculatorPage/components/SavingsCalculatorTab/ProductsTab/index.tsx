@@ -1,9 +1,12 @@
 import { ListRow, Assets, colors } from 'tosslib';
-import { useGetSavingsProducts } from '@/pages/SavingsCalculatorPage/hooks/apis/savings-products';
+import type { SavingsProductResponse } from '@/pages/SavingsCalculatorPage/hooks/apis/savings-products/type';
+import { formatNumber } from '@/pages/SavingsCalculatorPage/utils/formatNumber';
 
-export function ProductsTab() {
-  const { data: savingsProducts } = useGetSavingsProducts();
+interface Props {
+  savingsProducts: SavingsProductResponse;
+}
 
+export function ProductsTab({ savingsProducts }: Props) {
   return savingsProducts?.map(({ id, name, annualRate, minMonthlyAmount, maxMonthlyAmount, availableTerms }) => (
     <ListRow
       key={id}
@@ -14,7 +17,7 @@ export function ProductsTab() {
           topProps={{ fontSize: 16, fontWeight: 'bold', color: colors.grey900 }}
           middle={`연 이자율: ${annualRate}%`}
           middleProps={{ fontSize: 14, color: colors.blue600, fontWeight: 'medium' }}
-          bottom={`${minMonthlyAmount.toLocaleString()}원 ~ ${maxMonthlyAmount.toLocaleString()}원 | ${availableTerms}개월`}
+          bottom={`${formatNumber(minMonthlyAmount)}원 ~ ${formatNumber(maxMonthlyAmount)}원 | ${availableTerms}개월`}
           bottomProps={{ fontSize: 13, color: colors.grey600 }}
         />
       }
