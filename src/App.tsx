@@ -1,12 +1,15 @@
 import { GlobalPortal, GlobalStyles } from 'tosslib';
-import { Routes } from './pages/Routes';
+import { ReactQueryProvider } from '@/components/Providers/ReactQueryProvider';
+import { Routes } from '@/pages/Routes';
 
 export function App() {
   return (
     <>
       <GlobalStyles />
       <GlobalPortal.Provider>
-        <Routes />
+        <ReactQueryProvider>
+          <Routes />
+        </ReactQueryProvider>
       </GlobalPortal.Provider>
     </>
   );

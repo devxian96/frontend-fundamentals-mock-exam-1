@@ -3,18 +3,29 @@
   "private": true,
   "packageManager": "yarn@4.6.0",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "tsc --noEmit --watch",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "prettier": "prettier --write .",
+    "preinstall": "npx only-allow yarn",
+    "prepare": "husky"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@tanstack/react-query": "^5.90.10",
     "react": "^18",
     "react-dom": "^18",
     "react-router-dom": "^7.1.1",
     "tosslib": "file:./tosslib.tgz"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "@hono/vite-dev-server": "^0.18.0",
+    "@tanstack/eslint-plugin-query": "^5.91.2",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^8.18.2",
@@ -27,9 +38,25 @@
     "eslint-plugin-react": "^7.37.3",
     "eslint-plugin-react-hooks": "^5.1.0",
     "hono": "^4.6.16",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.4.2",
     "typescript": "~5.7.2",
     "vite": "^6.0.6",
     "vite-tsconfig-paths": "^5.1.4"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "bash -c 'yarn prettier'",
+      "bash -c 'yarn lint'",
+      "bash -c 'yarn type-check'"
+    ],
+    "*.{json,md}": [
+      "bash -c 'yarn prettier'"
+    ]
+  },
+  "volta": {
+    "node": "22.21.1",
+    "yarn": "4.6.0"
   }
 }

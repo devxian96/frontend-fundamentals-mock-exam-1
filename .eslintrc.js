@@ -1,6 +1,8 @@
 module.exports = {
   root: true,
 
+  ignorePatterns: ['dist', 'server.mjs', 'node_modules', '.yarn'],
+
   env: {
     es6: true,
     node: true,
@@ -19,6 +21,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'eslint-config-prettier',
     'plugin:react/recommended',
+    'plugin:@tanstack/query/recommended',
   ],
   plugins: ['@typescript-eslint', 'import', 'prettier', 'react', 'react-hooks'],
   settings: { react: { version: 'detect' } },
