@@ -4,7 +4,12 @@ import type { FormInputs } from '@/pages/SavingsCalculatorPage';
 import { useFormContext } from 'react-hook-form';
 import { useGetSavingsProducts } from '@/pages/SavingsCalculatorPage/hooks/apis/savings-products';
 
-export function Products() {
+interface Props {
+  limit?: number;
+  sortByRate?: boolean;
+}
+
+export function Products({ limit, sortByRate }: Props) {
   const { data: savingsProducts } = useGetSavingsProducts();
 
   const { setValue, watch } = useFormContext<FormInputs>();
@@ -13,18 +18,21 @@ export function Products() {
   const selectedProductId = watch('selectedProductId');
 
   const filteredSavingsProducts =
-    savingsProducts?.filter(({ minMonthlyAmount, maxMonthlyAmount, availableTerms }) => {
-      const hasValidMonthlyPayment =
-        monthlyPayment !== undefined && Number.isFinite(monthlyPayment) && monthlyPayment > 0;
+    savingsProducts
+      ?.filter(({ minMonthlyAmount, maxMonthlyAmount, availableTerms }) => {
+        const hasValidMonthlyPayment =
+          monthlyPayment !== undefined && Number.isFinite(monthlyPayment) && monthlyPayment > 0;
 
-      const isMonthlyPaymentInRange =
-        monthlyPayment !== undefined && minMonthlyAmount <= monthlyPayment && maxMonthlyAmount >= monthlyPayment;
+        const isMonthlyPaymentInRange =
+          monthlyPayment !== undefined && minMonthlyAmount <= monthlyPayment && maxMonthlyAmount >= monthlyPayment;
 
-      const matchesMonthlyPayment = !hasValidMonthlyPayment || isMonthlyPaymentInRange;
-      const matchesSavingsPeriod = !savingsPeriod || availableTerms === savingsPeriod;
+        const matchesMonthlyPayment = !hasValidMonthlyPayment || isMonthlyPaymentInRange;
+        const matchesSavingsPeriod = !savingsPeriod || availableTerms === savingsPeriod;
 
-      return matchesMonthlyPayment && matchesSavingsPeriod;
-    }) ?? [];
+        return matchesMonthlyPayment && matchesSavingsPeriod;
+      })
+      .sort((a, b) => (sortByRate ? b.annualRate - a.annualRate : 0))
+      .slice(0, limit) ?? [];
 
   const handleProductClick = (productId: `savings-${number}`) => () => {
     setValue('selectedProductId', productId);

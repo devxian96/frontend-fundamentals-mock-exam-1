@@ -2,6 +2,7 @@ import { ListRow, colors, Spacing, Border, ListHeader } from 'tosslib';
 import { useFormContext } from 'react-hook-form';
 import type { FormInputs } from '@/pages/SavingsCalculatorPage';
 import { Empty } from './Empty';
+import { Products } from './Products';
 import { If } from '@/components/If';
 import { formatNumber } from '@/pages/SavingsCalculatorPage/utils/formatNumber';
 import { useGetSavingsProducts } from '@/pages/SavingsCalculatorPage/hooks/apis/savings-products';
@@ -77,34 +78,7 @@ export function Results() {
       <ListHeader title={<ListHeader.TitleParagraph fontWeight="bold">추천 상품 목록</ListHeader.TitleParagraph>} />
       <Spacing size={12} />
 
-      <ListRow
-        contents={
-          <ListRow.Texts
-            type="3RowTypeA"
-            top={'기본 정기적금'}
-            topProps={{ fontSize: 16, fontWeight: 'bold', color: colors.grey900 }}
-            middle={`연 이자율: 3.2%`}
-            middleProps={{ fontSize: 14, color: colors.blue600, fontWeight: 'medium' }}
-            bottom={`100,000원 ~ 500,000원 | 12개월`}
-            bottomProps={{ fontSize: 13, color: colors.grey600 }}
-          />
-        }
-        onClick={() => {}}
-      />
-      <ListRow
-        contents={
-          <ListRow.Texts
-            type="3RowTypeA"
-            top={'고급 정기적금'}
-            topProps={{ fontSize: 16, fontWeight: 'bold', color: colors.grey900 }}
-            middle={`연 이자율: 2.8%`}
-            middleProps={{ fontSize: 14, color: colors.blue600, fontWeight: 'medium' }}
-            bottom={`50,000원 ~ 1,000,000원 | 24개월`}
-            bottomProps={{ fontSize: 13, color: colors.grey600 }}
-          />
-        }
-        onClick={() => {}}
-      />
+      <Products limit={2} sortByRate />
 
       <Spacing size={40} />
     </>
