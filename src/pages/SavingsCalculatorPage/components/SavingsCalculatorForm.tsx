@@ -1,19 +1,14 @@
 import type { ChangeEvent } from 'react';
 import { TextField, SelectBottomSheet, Spacing } from 'tosslib';
 import type { FormInputs } from '@/pages/SavingsCalculatorPage';
-import type { UseFormSetValue, Control } from 'react-hook-form';
-import { useWatch } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { formatNumber } from '@/pages/SavingsCalculatorPage/utils/formatNumber';
 
-interface Props {
-  setValue: UseFormSetValue<FormInputs>;
-  control: Control<FormInputs>;
-}
-
-export function SavingsCalculatorForm({ setValue, control }: Props) {
-  const savingsPeriod = useWatch({ control, name: 'savingsPeriod' });
-  const targetAmount = useWatch({ control, name: 'targetAmount' });
-  const monthlyPayment = useWatch({ control, name: 'monthlyPayment' });
+export function SavingsCalculatorForm() {
+  const { setValue, watch } = useFormContext<FormInputs>();
+  const savingsPeriod = watch('savingsPeriod');
+  const targetAmount = watch('targetAmount');
+  const monthlyPayment = watch('monthlyPayment');
 
   const handleNumberChange = (fieldName: 'targetAmount' | 'monthlyPayment') => {
     return (event: ChangeEvent<HTMLInputElement>) => {

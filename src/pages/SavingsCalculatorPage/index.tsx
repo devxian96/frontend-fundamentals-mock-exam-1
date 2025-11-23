@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import {
   Border,
   // ListHeader,
@@ -12,26 +12,27 @@ export interface FormInputs {
   targetAmount?: number;
   monthlyPayment?: number;
   savingsPeriod: number;
+  selectedProductId: `savings-${number}`;
 }
 
 export function SavingsCalculatorPage() {
-  const { setValue, control } = useForm<FormInputs>({
+  const methods = useForm<FormInputs>({
     defaultValues: { savingsPeriod: 12 },
   });
 
   return (
-    <>
+    <FormProvider {...methods}>
       <NavigationBar title="적금 계산기" />
 
       <Spacing size={16} />
 
-      <SavingsCalculatorForm setValue={setValue} control={control} />
+      <SavingsCalculatorForm />
 
       <Spacing size={24} />
       <Border height={16} />
       <Spacing size={8} />
 
-      <SavingsCalculatorTab control={control} />
+      <SavingsCalculatorTab />
 
       {/* 아래는 계산 결과 탭 내용이에요. 계산 결과 탭을 구현할 때 주석을 해제해주세요. */}
       {/* <Spacing size={8} />
@@ -110,6 +111,6 @@ export function SavingsCalculatorPage() {
 
       {/* 아래는 사용자가 적금 상품을 선택하지 않고 계산 결과 탭을 선택했을 때 출력해주세요. */}
       {/* <ListRow contents={<ListRow.Texts type="1RowTypeA" top="상품을 선택해주세요." />} /> */}
-    </>
+    </FormProvider>
   );
 }
